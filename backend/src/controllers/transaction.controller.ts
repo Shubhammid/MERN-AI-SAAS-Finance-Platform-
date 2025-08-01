@@ -8,6 +8,7 @@ import {
 } from "../validators/transaction.validator";
 import {
   createTransactionService,
+  deleteTransactionService,
   duplicateTransactionService,
   getAllTransactionService,
   getTransactionByIdService,
@@ -95,6 +96,19 @@ export const updateTransactionController = asyncHandler(
 
     return res.status(HTTPSTATUS.OK).json({
       message: "Transaction updated successfully",
+    });
+  }
+);
+
+export const deleteTransactionController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const userId = req.user?._id;
+    const transactionId = transactionIdSchema.parse(req.params.id);
+
+    await deleteTransactionService(userId, transactionId);
+
+    return res.status(HTTPSTATUS.OK).json({
+      message: "Transaction deleted successfully",
     });
   }
 );

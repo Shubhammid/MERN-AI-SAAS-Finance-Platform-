@@ -187,3 +187,16 @@ export const updateTransactionService = async (
 
   return;
 };
+
+export const deleteTransactionService = async (
+  userId: string,
+  transactionId: string
+) => {
+  const deleted = await TransactionModel.findByIdAndDelete({
+    _id: transactionId,
+    userId,
+  });
+  if (!deleted) throw new NotFoundException("Transaction not found");
+
+  return;
+};

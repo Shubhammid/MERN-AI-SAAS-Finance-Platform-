@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   bulkDeleteTransactionController,
+  bulkTransactionController,
   createTransactionController,
   deleteTransactionController,
   duplicateTransactionController,
@@ -12,6 +13,9 @@ import {
 const transactionRoutes = Router();
 
 transactionRoutes.post("/create", createTransactionController);
+
+transactionRoutes.post("/bulk-transaction", bulkTransactionController);
+
 transactionRoutes.put("/duplicate/:id", duplicateTransactionController);
 transactionRoutes.put("/update/:id", updateTransactionController);
 

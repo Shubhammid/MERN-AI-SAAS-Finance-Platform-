@@ -1,13 +1,18 @@
-import TransactionModel, { TransactionTypeEnum } from "../models/transaction.model";
+import TransactionModel, {
+  TransactionTypeEnum,
+} from "../models/transaction.model";
 import { NotFoundException } from "../utils/app-error";
 import { calculateNextOccurrence } from "../utils/helper";
-import { CreateTransactionType, UpdateTransactionType } from "../validators/transaction.validator";
+import {
+  CreateTransactionType,
+  UpdateTransactionType,
+} from "../validators/transaction.validator";
 
 export const createTransactionService = async (
   body: CreateTransactionType,
   userId: string
 ) => {
-    let nextRecurringDate: Date | undefined;
+  let nextRecurringDate: Date | undefined;
   const currentDate = new Date();
 
   if (body.isRecurring && body.recurringInterval) {
@@ -217,4 +222,37 @@ export const bulkDeleteTransactionService = async (
     sucess: true,
     deletedCount: result.deletedCount,
   };
+};
+
+export const bulkTransactionService = async (
+  userId: string,
+  transactions: CreateTransactionType[]
+) => {
+  try {
+    const bulkOps = transactions.map((tx) => ({
+      insertOne: {
+        document: {
+          ...tx,
+          userId,
+          isRecurring: false,
+          nextRecurringDate: null,
+          recurringInterval: null,
+          lastProcesses: null,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      },
+    }));
+
+    const result = await TransactionModel.bulkWrite(bulkOps, {
+      ordered: true,
+    });
+
+    return {
+      insertedCount: result.insertedCount,
+      success: true,
+    };
+  } catch (error) {
+    throw error;
+  }
 };

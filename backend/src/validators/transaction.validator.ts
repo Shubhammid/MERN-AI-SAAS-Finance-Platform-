@@ -20,8 +20,8 @@ export const baseTransactionSchema = z.object({
   date: z
     .union([z.string().datetime({ message: "Invalid date string" }), z.date()])
     .transform((val) => new Date(val)),
-    isRecurring: z.boolean().default(false),
-    recurringInterval: z
+  isRecurring: z.boolean().default(false),
+  recurringInterval: z
     .enum([
       RecurringIntervalEnum.DAILY,
       RecurringIntervalEnum.WEEKLY,
@@ -31,7 +31,7 @@ export const baseTransactionSchema = z.object({
     .nullable()
     .optional(),
 
-      receiptUrl: z.string().optional(),
+  receiptUrl: z.string().optional(),
   paymentMethod: z
     .enum([
       PaymentMethodEnum.CARD,
@@ -44,9 +44,19 @@ export const baseTransactionSchema = z.object({
     .default(PaymentMethodEnum.CASH),
 });
 
+export const bulkDeleteTransactionSchema = z.object({
+  transactionIds: z
+    .array(z.string().length(24, "Invalid transaction ID format"))
+    .min(1, "At least one transaction ID must be provided"),
+});
+
 export const createTransactionSchema = baseTransactionSchema;
 export const updateTransactionSchema = baseTransactionSchema.partial();
 
 export type CreateTransactionType = z.infer<typeof createTransactionSchema>;
 
 export type UpdateTransactionType = z.infer<typeof updateTransactionSchema>;
+
+export type BulkDelteTransactionType = z.infer<
+  typeof bulkDeleteTransactionSchema
+>;

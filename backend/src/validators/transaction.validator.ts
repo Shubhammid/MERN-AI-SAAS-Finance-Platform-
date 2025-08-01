@@ -9,6 +9,7 @@ export const transactionIdSchema = z.string().trim().min(1);
 
 export const baseTransactionSchema = z.object({
   title: z.string().min(1, "Title is required"),
+  description: z.string().optional(),
   type: z.enum([TransactionTypeEnum.INCOME, TransactionTypeEnum.EXPENSE], {
     errorMap: () => ({
       message: "Transaction type must either INCOME or EXPENSE",

@@ -13,6 +13,7 @@ import authRoutes from "./routes/auth.route";
 import { passportAuthenticateJwt } from "./config/passport.config";
 import userRoutes from "./routes/user.route";
 import transactionRoutes from "./routes/transaction.route";
+import { startJobs } from "./cron/scheduler";
 
 const app = express();
 const BASE_PATH = Env.BASE_PATH;
@@ -38,6 +39,8 @@ app.get(
     });
   })
 );
+
+startJobs();
 
 app.use(`${BASE_PATH}/auth`, authRoutes);
 app.use(`${BASE_PATH}/user`, passportAuthenticateJwt, userRoutes);

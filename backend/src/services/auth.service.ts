@@ -31,6 +31,7 @@ export const registerService = async (body: RegisterSchemaType) => {
         frequency: ReportFrequencyEnum.MONTHLY,
         isEnabled: true,
         nextReportDate: calulateNextReportDate(),
+        lastSentDate: null,
       });
       await reportSetting.save({ session });
       return { user: newUser.omitPassword() };

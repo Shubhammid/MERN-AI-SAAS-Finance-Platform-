@@ -69,7 +69,7 @@ const transactionSchema = new Schema<TransactionDocument>(
       set: (value: number) => convertToCents(value),
       get: (value: number) => convertToDollarUnit(value),
     },
-
+    
     description: {
       type: String,
     },

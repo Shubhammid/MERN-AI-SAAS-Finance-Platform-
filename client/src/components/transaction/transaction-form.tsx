@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { useEffect, useState } from "react";
-import { Calendar } from "lucide-react";
+import { Calendar, Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -41,7 +41,11 @@ import { Switch } from "../ui/switch";
 import CurrencyInputField from "../ui/currency-input";
 import { SingleSelector } from "../ui/single-select";
 import { AIScanReceiptData } from "@/features/transaction/transationType";
-import { useCreateTransactionMutation } from "@/features/transaction/transactionAPI";
+import {
+  useCreateTransactionMutation,
+  useGetSingleTransactionQuery,
+  useUpdateTransactionMutation,
+} from "@/features/transaction/transactionAPI";
 import { toast } from "sonner";
 
 const formSchema = z.object({
@@ -82,16 +86,17 @@ const TransactionForm = (props: {
 
   const [isScanning, setIsScanning] = useState(false);
 
-  // const {data, isLoading } = useGetSingleTransactionQuery(
-  //   transactionId || "",{skip: !transactionId}
-  // );
-  // const editData = data?.data;
+  const { data, isLoading } = useGetSingleTransactionQuery(
+    transactionId || "",
+    { skip: !transactionId }
+  );
+  const editData = data?.transaction;
 
   const [createTransaction, { isLoading: isCreating }] =
     useCreateTransactionMutation();
 
-  // const [updateTransaction, { isLoading: isUpdating }] =
-  //   useUpdateTransactionMutation();
+  const [updateTransaction, { isLoading: isUpdating }] =
+    useUpdateTransactionMutation();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -110,20 +115,20 @@ const TransactionForm = (props: {
   });
 
   useEffect(() => {
-    if (isEdit && transactionId) {
+    if (isEdit && transactionId && editData) {
       form.reset({
-        title: "",
-        amount: "",
-        type: _TRANSACTION_TYPE.INCOME,
-        category: "",
-        date: new Date(),
-        paymentMethod: "",
-        isRecurring: false,
-        frequency: null,
-        description: "",
+        title: editData?.title,
+        amount: editData.amount.toString(),
+        type: editData.type,
+        category: editData.category?.toLowerCase(),
+        date: new Date(editData.date),
+        paymentMethod: editData.paymentMethod,
+        isRecurring: editData.isRecurring,
+        frequency: editData.recurringInterval,
+        description: editData.description,
       });
     }
-  }, [form, isEdit, transactionId]);
+  }, [editData, form, isEdit, transactionId]);
 
   const frequencyOptions = Object.entries(_TRANSACTION_FREQUENCY).map(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -164,17 +169,15 @@ const TransactionForm = (props: {
       recurringInterval: values.frequency || null,
     };
     if (isEdit && transactionId) {
-      console.log("Edit transaction:", payload);
-      onCloseDrawer?.();
-      // updateTransaction({id: transactionId, transaction: payload})
-      // .unwrap()
-      // .then(() => {
-      //   onCloseDrawer?.();
-      //   toast.success("Transaction updated successfully");
-      // })
-      // .catch((error) => {
-      //   toast.error(error.data.message || "Failed to update transaction");
-      // });
+      updateTransaction({id: transactionId, transaction: payload})
+      .unwrap()
+      .then(() => {
+        onCloseDrawer?.();
+        toast.success("Transaction updated successfully");
+      })
+      .catch((error) => {
+        toast.error(error.data.message || "Failed to update transaction");
+      });
       return;
     }
     createTransaction(payload)
@@ -382,7 +385,7 @@ const TransactionForm = (props: {
                   <FormLabel>Payment Method</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    value={field.value}
                     disabled={isScanning}
                   >
                     <FormControl className="w-full">
@@ -477,6 +480,7 @@ const TransactionForm = (props: {
                 )}
               />
             )}
+            
             {/* Description */}
             <FormField
               control={form.control}
@@ -502,11 +506,19 @@ const TransactionForm = (props: {
             <Button
               type="submit"
               className="w-full !text-white"
-              disabled={isScanning || isCreating}
+              disabled={isScanning || isCreating || isUpdating }
             >
+              {isCreating || isUpdating ? (
+                <Loader className="h-4 w-4 animate-spin" />
+              ) : null}
               {isEdit ? "Update" : "Save"}
             </Button>
           </div>
+          {isLoading && (
+            <div className="absolute top-0 left-0 right-0 bottom-0 bg-white/70 dark:bg-background/70 z-50 flex justify-center">
+              <Loader className="h-8 w-8 animate-spin" />
+            </div>
+          )}
         </form>
       </Form>
     </div>

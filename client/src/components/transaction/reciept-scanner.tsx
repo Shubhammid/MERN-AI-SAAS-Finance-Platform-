@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { AIScanReceiptData } from "@/features/transaction/transationType";
 import { toast } from "sonner";
 import { useProgressLoader } from "@/hooks/use-progress-loader";
+import { useAiScanReceiptMutation } from "@/features/transaction/transactionAPI";
 
 interface ReceiptScannerProps {
   loadingChange: boolean;
@@ -28,7 +29,7 @@ const ReceiptScanner = ({
       resetProgress,
     } = useProgressLoader({ initialProgress: 10, completionDelay: 500 });
 
-  // const [aiScanReceipt] = useAiScanReceiptMutation()
+  const [aiScanReceipt] = useAiScanReceiptMutation()
 
 
   const handleReceiptUpload = async (
@@ -83,19 +84,20 @@ const ReceiptScanner = ({
         onLoadingChange(false);
       },2000)
 
-      // aiScanReceipt(formData).unwrap().then((res) => {
-      //   updateProgress(100)
-      //   onScanComplete(res.data);
-      //   toast.success("Receipt scanned successfully");
-      // }).catch((error) => {
-      //   toast.error(error.data?.message || "Failed to scan receipt");
-      // })
-      // .finally(() => {
-      //   clearInterval(interval);
-      //   resetProgress();
-      //   setReceipt(null);
-      //   onLoadingChange(false);
-      // })
+      aiScanReceipt(formData).unwrap().then((res) => {
+        updateProgress(100)
+        onScanComplete(res.data);
+        toast.success("Receipt scanned successfully");
+      }).catch((error) => {
+        toast.error(error.data?.message || "Failed to scan receipt");
+      })
+      .finally(() => {
+        clearInterval(interval);
+        doneProgress();
+        resetProgress();
+        setReceipt(null);
+        onLoadingChange(false);
+      })
     };
     reader.readAsDataURL(file);
   };

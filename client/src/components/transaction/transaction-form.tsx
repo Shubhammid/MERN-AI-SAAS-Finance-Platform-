@@ -201,8 +201,8 @@ const TransactionForm = (props: {
             {!isEdit && (
               <RecieptScanner
                 loadingChange={isScanning}
-                onScanComplete={handleScanComplete}
                 onLoadingChange={setIsScanning}
+                onScanComplete={handleScanComplete}
               />
             )}
 

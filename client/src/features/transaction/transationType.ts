@@ -51,7 +51,7 @@ export interface TransactionType {
 
 export interface GetAllTransactionResponse {
   message: string;
-  transactions: TransactionType[];
+  transations: TransactionType[];
   pagination: {
     pageSize: number;
     pageNumber: number;

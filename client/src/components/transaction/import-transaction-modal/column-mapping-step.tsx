@@ -24,8 +24,8 @@ type ColumnMappingStepProps = {
   
 
 type AvailableAttributeType =
-  | { fieldName: string; required?: never } // For the "Do not import" option
-  | TransactionField; // For the actual fields
+  | { fieldName: string; required?: never } 
+  | TransactionField; 
 
 
 const ColumnMappingStep =({
@@ -81,7 +81,6 @@ const ColumnMappingStep =({
     (field) => !field.required || Object.values(mappings).includes(field.fieldName)
   );
 
-    // Calculate the count of non-"none" mappings
   const validMappingsCount = Object.values(mappings).filter(
       field => field !== "Skip"
   ).length;

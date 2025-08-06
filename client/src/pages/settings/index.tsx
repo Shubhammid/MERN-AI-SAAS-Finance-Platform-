@@ -34,7 +34,6 @@ const sidebarNavItems = [
           <aside className="mr-4 lg:w-1/5">
             <SidebarNav items={sidebarNavItems} />
           </aside>
-          {/* <Separator orientation="vertical" className=" !h-[500px] !border-gray-200" /> */}
           <div className="flex-1 lg:max-w-2xl">
             <Outlet />
           </div>

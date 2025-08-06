@@ -19,12 +19,9 @@ export const formatPercentage = (
 
   
   if (!showSign) return formatted;
-   // Special handling for expenses (opposite of normal)
    if (isExpense) {
     return value <= 0 ? `+${formatted}` : `-${formatted}`;
   }
-
-  // Normal handling for income/balance
   return value >= 0 ? `+${formatted}` : `-${formatted}`;
 
 };

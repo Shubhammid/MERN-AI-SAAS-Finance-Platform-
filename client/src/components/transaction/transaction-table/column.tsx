@@ -231,7 +231,6 @@ export const transactionColumns: ColumnDef<TransactionType>[] = [
 
 // eslint-disable-next-line react-refresh/only-export-components
 const ActionsCell = ({ row }: { row: any }) => {
-  //const isRecurring = row.original.isRecurring;
   const transactionId = row.original.id;
   const { onOpenDrawer } = useEditTransactionDrawer();
    const [duplicateTransaction,{isLoading:isDuplicating}] = useDuplicateTransactionMutation();
@@ -286,14 +285,6 @@ const ActionsCell = ({ row }: { row: any }) => {
           {isDuplicating && <Loader className="ml-1 h-4 w-4 absolute right-2 animate-spin" />}
         </DropdownMenuItem>
         
-        {/* {isRecurring && (
-          <>
-            <DropdownMenuItem>
-              <StopCircleIcon className="mr-1 h-4 w-4" />
-              Stop Recurring
-            </DropdownMenuItem>
-          </>
-        )} */}
           <DropdownMenuSeparator />
             <DropdownMenuItem className="relative !text-destructive"
               disabled={isDeleting}

@@ -153,9 +153,7 @@ const TransactionForm = (props: {
       receiptUrl: data.receiptUrl || "",
     });
   };
-  // Handle form submission
   const onSubmit = (values: FormValues) => {
-    // if (isCreating || isUpdating) return;
     console.log("Form submitted:", values);
     const payload = {
       title: values.title,
@@ -197,7 +195,6 @@ const TransactionForm = (props: {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 px-4">
           <div className="space-y-6">
-            {/* Receipt Upload Section */}
             {!isEdit && (
               <RecieptScanner
                 loadingChange={isScanning}
@@ -206,7 +203,7 @@ const TransactionForm = (props: {
               />
             )}
 
-            {/* Transaction Type */}
+          
             <FormField
               control={form.control}
               name="type"
@@ -262,7 +259,7 @@ const TransactionForm = (props: {
               )}
             />
 
-            {/* Title */}
+           
             <FormField
               control={form.control}
               name="title"
@@ -281,7 +278,7 @@ const TransactionForm = (props: {
               )}
             />
 
-            {/* Amount */}
+            
             <FormField
               control={form.control}
               name="amount"
@@ -304,7 +301,7 @@ const TransactionForm = (props: {
               )}
             />
 
-            {/* Category */}
+           
             <FormField
               control={form.control}
               name="category"
@@ -329,7 +326,7 @@ const TransactionForm = (props: {
               )}
             />
 
-            {/* Date */}
+          
             <FormField
               control={form.control}
               name="date"
@@ -364,7 +361,7 @@ const TransactionForm = (props: {
                         selected={field.value}
                         onSelect={(date) => {
                           console.log(date);
-                          field.onChange(date); // This updates the form value
+                          field.onChange(date); 
                         }}
                         disabled={(date) => date < new Date("2023-01-01")}
                         initialFocus
@@ -376,7 +373,7 @@ const TransactionForm = (props: {
               )}
             />
 
-            {/* Payment Method */}
+            
             <FormField
               control={form.control}
               name="paymentMethod"
@@ -481,7 +478,7 @@ const TransactionForm = (props: {
               />
             )}
             
-            {/* Description */}
+           
             <FormField
               control={form.control}
               name="description"

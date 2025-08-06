@@ -46,7 +46,7 @@ const Navbar = () => {
       >
         <div className="w-full flex h-14 max-w-[var(--max-width)] items-center mx-auto">
           <div className="w-full flex items-center justify-between">
-            {/* Left side - Logo */}
+           
             <div className="flex items-center gap-4">
               <Button
                 variant="ghost"
@@ -61,7 +61,6 @@ const Navbar = () => {
               <Logo />
             </div>
 
-            {/* Navigation*/}
             <nav className="hidden md:flex items-center gap-x-2 overflow-x-auto">
               {routes?.map((route) => (
                 <Button
@@ -84,7 +83,6 @@ const Navbar = () => {
               ))}
             </nav>
 
-            {/* Mobile Navigation */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetContent side="left" className="bg-white">
                 <nav className="flex flex-col gap-y-2 pt-9">
@@ -110,8 +108,7 @@ const Navbar = () => {
               </SheetContent>
             </Sheet>
 
-            {/* {} */}
-            {/* Right side - User actions */}
+          
             <div className="flex items-center space-x-4">
               <UserNav
                 userName={user?.name || ""}

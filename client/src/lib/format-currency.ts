@@ -17,7 +17,6 @@ export const formatCurrency = (value: number,
     minimumFractionDigits: decimalPlaces,
     maximumFractionDigits: decimalPlaces,
     notation: compact ? 'compact' : 'standard',
-    //signDisplay: showSign  ? 'always' : isExpense ? 'always' : 'auto',
     signDisplay: showSign ? 'always' : 'auto',
   }).format(displayValue);
 };

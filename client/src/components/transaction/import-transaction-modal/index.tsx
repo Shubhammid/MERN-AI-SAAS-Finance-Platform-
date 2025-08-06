@@ -30,8 +30,6 @@ const ImportTransactionModal = () => {
     { fieldName: 'description', required: false },
   ];
 
-  // console.log(transactionFields, file, csvColumns, csvData, mappings);
-
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFileUpload = (file: File, columns: CsvColumn[], data: any[]) => {

@@ -12,8 +12,6 @@ const Billing = () => {
       <Separator />
       
       <div className="w-full">
-        {/* Current Plan */}
-        {/* Upgrade Options */}
         <div className="mt-0">
           <h1 className="text-lg font-medium mb-2">Support Us</h1>
           <p className="text-base mb-2">

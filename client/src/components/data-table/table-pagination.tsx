@@ -15,7 +15,7 @@ import {
 interface DataTablePaginationProps {
   pageNumber: number;
   pageSize: number;
-  totalCount: number; // Total rows from the API
+  totalCount: number; 
   totalPages: number;
   onPageChange?: (page: number) => void;
   onPageSizeChange?: (size: number) => void;
@@ -31,22 +31,20 @@ export function DataTablePagination({
 }: DataTablePaginationProps) {
 
   const handlePageSizeChange = (newSize: number) => {
-    onPageSizeChange?.(newSize); // Trigger external handler if provided
+    onPageSizeChange?.(newSize); 
   };
 
   const handlePageChange = (newPage: number) => {
-    onPageChange?.(newPage); // Trigger external handler if provided
+    onPageChange?.(newPage); 
   };
 
   return (
     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 px-2">
-      {/* Showing X to Y of Z Rows */}
       <div className="flex-1 text-sm text-muted-foreground">
         Showing {(pageNumber - 1) * pageSize + 1}-
         {Math.min(pageNumber * pageSize, totalCount)} of {totalCount}
       </div>
       <div className="flex flex-col lg:flex-row lg:items-center space-y-2 lg:space-x-8 lg:space-y-0">
-        {/* Rows Per Page Selector */}
         <div className="flex items-center space-x-2">
           <p className="text-sm font-medium">Rows per page</p>
           <Select
@@ -70,13 +68,13 @@ export function DataTablePagination({
           </Select>
         </div>
 
-        {/* Page Info */}
+       
         <div className="flex items-center">
           <div className="flex lg:w-[100px] items-center justify-center text-sm font-medium">
             Page {pageNumber} of {totalPages}
           </div>
 
-          {/* Pagination Controls */}
+      
           <div className="flex items-center space-x-2">
             <Button
               variant="outline"

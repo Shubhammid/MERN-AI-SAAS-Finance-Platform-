@@ -4,7 +4,6 @@ import {
   ColumnDef,
   getCoreRowModel,
   getFilteredRowModel,
-  //getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
   flexRender,
@@ -111,9 +110,6 @@ export function DataTable<TData>({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    // getPaginationRowModel: isShowPagination
-    // ? getPaginationRowModel()
-    // : undefined,
   });
 
   const selectedRows = table.getFilteredSelectedRowModel().rows;
@@ -147,7 +143,6 @@ export function DataTable<TData>({
 
   return (
     <div className="w-full">
-      {/* Top Bar: Search & Filters */}
       <div className="flex flex-wrap justify-between items-center gap-2 pb-4">
         <div className="flex items-center gap-2 flex-wrap flex-1">
           {showSearch && (
@@ -211,7 +206,7 @@ export function DataTable<TData>({
         ) : null}
       </div>
 
-      {/* Table */}
+     
       <div className={cn("rounded-md border overflow-x-auto", className)}>
         {isLoading ? (
           <TableSkeleton columns={6} rows={20} />
@@ -270,7 +265,6 @@ export function DataTable<TData>({
         )}
       </div>
 
-      {/* Pagination */}
       {isShowPagination && (
         <div className="mt-4">
           <DataTablePagination

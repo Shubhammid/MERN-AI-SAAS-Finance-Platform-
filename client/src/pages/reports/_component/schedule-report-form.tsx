@@ -89,7 +89,6 @@ const ScheduleReportForm = ({
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="w-full space-y-6 flex-1 px-4">
-            {/* Enable/Disable Switch */}
             <FormField
               control={form.control}
               name="isEnabled"
@@ -117,7 +116,7 @@ const ScheduleReportForm = ({
             />
 
             <div className="relative space-y-6">
-              {/* Email Field */}
+             
               <FormField
                 control={form.control}
                 name="email"
@@ -140,7 +139,7 @@ const ScheduleReportForm = ({
                 )}
               />
 
-              {/* Frequency */}
+             
               <FormField
                 control={form.control}
                 name="frequency"
@@ -166,13 +165,13 @@ const ScheduleReportForm = ({
                 )}
               />
 
-              {/* Disabled overlay */}
+             
               {!form.watch("isEnabled") && (
                 <div className="absolute inset-0 bg-white/50 dark:bg-black/50 z-10" />
               )}
             </div>
 
-            {/* Schedule Summary */}
+           
             <div className="bg-muted p-4 rounded-lg">
               <h3 className="font-medium mb-2">Schedule Summary</h3>
               <p className="text-sm text-muted-foreground">
@@ -180,7 +179,7 @@ const ScheduleReportForm = ({
               </p>
             </div>
 
-            {/* Submit Button */}
+           
             <div className="sticky bottom-0 py-2 z-50">
               <Button
                 type="submit"

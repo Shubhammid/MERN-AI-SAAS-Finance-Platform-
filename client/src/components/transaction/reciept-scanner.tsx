@@ -49,14 +49,13 @@ const ReceiptScanner = ({
 
     startProgress(10);
     onLoadingChange(true);
-    // Simulate file upload and processing
+    
     const reader = new FileReader();
     reader.onload = (e) => {
       const result = e.target?.result as string;
       setReceipt(result);
 
-      // Simulate scanning progress
-      // Start progress
+     
       let currentProgress = 10;
       const interval = setInterval(() => {
         const increment = currentProgress < 90 ? 10 : 1;
@@ -107,7 +106,7 @@ const ReceiptScanner = ({
     <div className="space-y-3">
       <Label className="text-sm font-medium">AI Scan Receipt</Label>
       <div className="flex items-start gap-3 border-b pb-4">
-        {/* Receipt Preview */}
+        
         <div
           className={`h-12 w-12 rounded-md border bg-cover bg-center ${
             !receipt ? "bg-muted" : ""
@@ -121,7 +120,7 @@ const ReceiptScanner = ({
           )}
         </div>
 
-        {/* Upload Input or Progress */}
+       
         <div className="flex-1">
           {!loadingChange ? (
             <>

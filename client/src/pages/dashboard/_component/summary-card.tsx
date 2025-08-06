@@ -27,7 +27,7 @@ interface SummaryCardProps {
 }
 
 const getCardStatus = (
-  value: number, 
+  value: number,
   cardType: CardType,
   expenseRatio?: number
 ): CardStatus => {
@@ -40,7 +40,6 @@ const getCardStatus = (
       };
     }
 
-    // Check savings percentage first
     if (value < 10) {
       return {
         label: "Low Savings",
@@ -59,7 +58,7 @@ const getCardStatus = (
       };
     }
 
-    // High savings → check if expense ratio is unusually high for warning
+
     if (expenseRatio && expenseRatio > 75) {
       return {
         label: "High Spend",
@@ -101,7 +100,7 @@ const getCardStatus = (
     };
   }
 
-  // For balance card when negative
+
   if (cardType === "balance" && value < 0) {
     return {
       label: "Overdrawn",
@@ -118,13 +117,10 @@ const getCardStatus = (
   };
 };
 
-
 const getTrendDirection = (value: number, cardType: CardType) => {
   if (cardType === "expenses") {
-    // For expenses, lower is better
     return value <= 0 ? "positive" : "negative";
   }
-  // For income and balance, higher is better
   return value >= 0 ? "positive" : "negative";
 };
 
@@ -166,7 +162,6 @@ const SummaryCard: FC<SummaryCardProps> = ({
     );
   }
 
-  // This was recently updated
   const formatCountupValue = (val: number) => {
     return isPercentageValue
       ? formatPercentage(val, { decimalPlaces: 1 })
@@ -175,6 +170,7 @@ const SummaryCard: FC<SummaryCardProps> = ({
           showSign: cardType === "balance" && val < 0,
         });
   };
+
   return (
     <Card className="!border-none !border-0 !gap-0 !bg-white/5">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 !pb-5">
@@ -212,7 +208,7 @@ const SummaryCard: FC<SummaryCardProps> = ({
                 </span>
               )}
             </div>
-          ) : dateRange?.value ===DateRangeEnum.ALL_TIME  ? (
+          ) : dateRange?.value === DateRangeEnum.ALL_TIME ? (
             <span className="text-gray-400">Showing {dateRange?.label}</span>
           ) : value === 0 || status.label ? (
             <div className="flex items-center gap-1.5">
@@ -225,7 +221,7 @@ const SummaryCard: FC<SummaryCardProps> = ({
                 <span className="text-gray-400">• {dateRange?.label}</span>
               )}
             </div>
-          ): showTrend ? (
+          ) : showTrend ? (
             <div className="flex items-center gap-1.5">
               {percentageChange !== 0 && (
                 <div
@@ -241,7 +237,6 @@ const SummaryCard: FC<SummaryCardProps> = ({
                   ) : (
                     <TrendingDownIcon className="size-3" />
                   )}
-{/*                   Math.abs(percentageChange || 0) */}
                   <span>
                     {formatPercentage(percentageChange || 0, {
                       showSign: percentageChange !== 0,

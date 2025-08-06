@@ -66,8 +66,9 @@ export const _REPORT_STATUS = {
   SENT: "SENT",
   FAILED: "FAILED",
   PENDING: "PENDING",
-  PROCESSING: "PROCESSING"
-} as const
+  PROCESSING: "PROCESSING",
+  NO_ACTIVITY: "NO_ACTIVITY",
+} as const;
 
 export type ReportStatusType = keyof typeof _REPORT_STATUS
 

@@ -15,6 +15,7 @@ import userRoutes from "./routes/user.route";
 import transactionRoutes from "./routes/transaction.route";
 import { initializeCrons } from "./cron";
 import reportRoutes from "./routes/report.route";
+import { getDateRange } from "./utils/date";
 import analyticsRoutes from "./routes/analytics.route";
 
 const app = express();
@@ -37,7 +38,7 @@ app.get(
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     throw new BadRequestException("This is a test error");
     res.status(HTTPSTATUS.OK).json({
-      message: "Hello this is Shubham's backend server",
+      message: "Hello Subcribe to the channel",
     });
   })
 );
@@ -50,12 +51,7 @@ app.use(`${BASE_PATH}/analytics`, passportAuthenticateJwt, analyticsRoutes);
 
 app.use(errorHandler);
 
-app.listen(Env.PORT, async () => {
-  await connctDatabase();
-
-  if (Env.NODE_ENV === "development") {
-    await initializeCrons();
-  }
-  
-  console.log(`Server is running on port ${Env.PORT} in ${Env.NODE_ENV} mode`);
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });

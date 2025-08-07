@@ -36,9 +36,9 @@ app.use(
 app.get(
   "/",
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    throw new BadRequestException("This is a test error");
+    //throw new BadRequestException("This is a test error");
     res.status(HTTPSTATUS.OK).json({
-      message: "Hello Subcribe to the channel",
+      message: "This is Shubham's Expense Tracker Server",
     });
   })
 );
@@ -51,7 +51,12 @@ app.use(`${BASE_PATH}/analytics`, passportAuthenticateJwt, analyticsRoutes);
 
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+app.listen(Env.PORT, async () => {
+  await connctDatabase();
+
+  if (Env.NODE_ENV === "development") {
+    await initializeCrons();
+  }
+
+  console.log(`Server is running on port ${Env.PORT} in ${Env.NODE_ENV} mode`);
 });
